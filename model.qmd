@@ -1,0 +1,42 @@
+---
+title: "Model"
+format:
+  html:
+    code-fold: true
+---
+  
+# Load necessary libraries
+```{r}
+library(palmerpenguins)
+library(dplyr)
+library(tidyr)
+```
+  
+# Get data
+  
+```{r}
+df <- penguins %>% 
+  drop_na()
+
+head(df, 3)
+```
+  
+# Define model and fit
+  
+```{r}
+X <- df %>% 
+  select(bill_length_mm, species, sex)
+
+y <- df$body_mass_g
+  
+model <- lm(y ~ ., data = X)
+```
+  
+# Get some information
+  
+```{r}
+cat(paste("R^2:", summary(model)$r.squared, "\n"))
+cat(paste("Intercept:", coef(model)[1], "\n"))
+cat("Columns:", colnames(X), "\n")
+cat(paste("Coefficients:", coef(model)[-1], "\n"))
+```
